@@ -1,8 +1,10 @@
 package com.dmurraysd.spring.service;
 
+import com.dmurraysd.spring.logging.IdContextProvider;
 import com.dmurraysd.spring.redis.repository.EventDataRepository;
-import com.dmurraysd.spring.rest.EventDataRequest;
-import com.dmurraysd.spring.rest.EventStatus;
+import com.dmurraysd.spring.rest.model.EventData;
+import com.dmurraysd.spring.rest.model.EventDataRequest;
+import com.dmurraysd.spring.rest.model.EventStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,11 +18,12 @@ class LiveEventTrackerServiceTest {
     @Test
     void shouldUpdateEventStatus() {
         EventDataRequest eventDataRequest = new EventDataRequest("eventId", EventStatus.LIVE);
-        when(eventDataRepository.save(eventDataRequest.toEventDataEntity())).thenReturn(eventDataRequest.toEventDataEntity());
+        EventData eventData = EventData.convertToInternal(eventDataRequest, new IdContextProvider(eventDataRequest.eventId(), "CID", "SID"));
+        when(eventDataRepository.save(eventData.toEventDataEntity())).thenReturn(eventData.toEventDataEntity());
 
-        EventDataRequest actualEventDataRequest = liveEventTrackerService.updateEventStatus(eventDataRequest);
+        EventData actualEventDataRequest = liveEventTrackerService.updateEventStatus(eventData);
 
-        assertEquals(eventDataRequest, actualEventDataRequest);
-        verify(eventDataRepository).save(eventDataRequest.toEventDataEntity());
+        assertEquals(eventData, actualEventDataRequest);
+        verify(eventDataRepository).save(eventData.toEventDataEntity());
     }
 }

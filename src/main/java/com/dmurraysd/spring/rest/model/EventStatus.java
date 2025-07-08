@@ -1,4 +1,4 @@
-package com.dmurraysd.spring.rest;
+package com.dmurraysd.spring.rest.model;
 
 public enum EventStatus {
     LIVE,

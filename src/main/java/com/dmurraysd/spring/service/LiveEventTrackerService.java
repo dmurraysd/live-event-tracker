@@ -2,7 +2,7 @@ package com.dmurraysd.spring.service;
 
 import com.dmurraysd.spring.redis.repository.EventDataEntity;
 import com.dmurraysd.spring.redis.repository.EventDataRepository;
-import com.dmurraysd.spring.rest.EventDataRequest;
+import com.dmurraysd.spring.rest.model.EventData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -17,9 +17,9 @@ public class LiveEventTrackerService {
         this.eventDataRepository = eventDataRepository;
     }
 
-    public EventDataRequest updateEventStatus(EventDataRequest eventDataRequest) {
-        EventDataEntity eventDataEntity = eventDataRepository.save(eventDataRequest.toEventDataEntity());
-        return eventDataEntity.toEventDataRequest();
+    public EventData updateEventStatus(EventData eventData) {
+        EventDataEntity eventDataEntity = eventDataRepository.save(eventData.toEventDataEntity());
+        return EventData.convertToInternal(eventDataEntity, eventData.context());
     }
 
 }

@@ -1,6 +1,6 @@
 package com.dmurraysd.spring.redis.cache;
 
-import com.dmurraysd.spring.rest.EventStatus;
+import com.dmurraysd.spring.rest.model.EventStatus;
 import org.springframework.stereotype.Component;
 
 @Component
