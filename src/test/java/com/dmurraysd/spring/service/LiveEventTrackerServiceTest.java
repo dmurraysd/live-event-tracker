@@ -1,5 +1,7 @@
 package com.dmurraysd.spring.service;
 
+import com.dmurraysd.spring.client.InternalMatchScoreClient;
+import com.dmurraysd.spring.kafka.KafkaUpdateProducer;
 import com.dmurraysd.spring.logging.IdContextProvider;
 import com.dmurraysd.spring.redis.repository.EventDataRepository;
 import com.dmurraysd.spring.rest.model.EventData;
@@ -13,7 +15,9 @@ import static org.mockito.Mockito.*;
 class LiveEventTrackerServiceTest {
 
     private final EventDataRepository eventDataRepository = mock(EventDataRepository.class);
-    private final LiveEventTrackerService liveEventTrackerService = new LiveEventTrackerService(eventDataRepository);
+    private final InternalMatchScoreClient internalMatchScoreClient = mock(InternalMatchScoreClient.class);
+    private final KafkaUpdateProducer kafkaUpdateProducer = mock(KafkaUpdateProducer.class);
+    private final LiveEventTrackerService liveEventTrackerService = new LiveEventTrackerService(eventDataRepository, internalMatchScoreClient, kafkaUpdateProducer);
 
     @Test
     void shouldUpdateEventStatus() {

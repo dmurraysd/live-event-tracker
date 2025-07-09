@@ -13,4 +13,7 @@ public class LoggingUtil {
         return new IdContextProvider(eventDataRequest.eventId(), uuid.toString(), sourceId);
     }
 
+    public static IdContextProvider toJobLoggingContext(UUID uuid, String sourceId) {
+        return new IdContextProvider(null, uuid.toString(), sourceId);
+    }
 }

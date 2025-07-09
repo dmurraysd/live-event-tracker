@@ -31,10 +31,10 @@ public class KafkaUpdateProducer {
         this.kafkaTopic = kafkaTopic;
     }
 
-    public CompletableFuture<Void> send(MatchScore message, IdProvider context) {
-        Message<Object> messageToProduce = MessageBuilder.withPayload(Objects.requireNonNullElse(message, KafkaNull.INSTANCE))
+    public CompletableFuture<Void> send(MatchScore matchScore, IdProvider context) {
+        Message<Object> messageToProduce = MessageBuilder.withPayload(Objects.requireNonNullElse(matchScore, KafkaNull.INSTANCE))
                 .setHeader(KafkaHeaders.TOPIC, kafkaTopic)
-                .setHeader(KafkaHeaders.KEY, message.eventId())
+                .setHeader(KafkaHeaders.KEY, matchScore.eventId())
                 .setHeader(CORRELATION_ID, context.getCorrelationId())
                 .setHeader(SOURCE_ID, context.getSourceId())
                 .build();
