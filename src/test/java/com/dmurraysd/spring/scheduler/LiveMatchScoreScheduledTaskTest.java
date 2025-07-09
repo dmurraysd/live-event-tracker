@@ -17,13 +17,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ActiveProfiles("scheduler")
-@SpringBootTest(classes = {RedisTestConfig.class},
-properties = {"scheduled.job.fixed.delay=2000"})
+@SpringBootTest(properties = {"scheduled.job.fixed.delay=2000"})
 class LiveMatchScoreScheduledTaskTest {
 
 
     @MockitoSpyBean
-    LiveMatchScoreScheduledTask liveMatchScoreScheduledTask;
+    private LiveMatchScoreScheduledTask liveMatchScoreScheduledTask;
 
     @MockitoBean
     private LiveEventTrackerService liveEventTrackerService;

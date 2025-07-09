@@ -2,24 +2,22 @@ package com.dmurraysd.spring.logging;
 
 import org.springframework.data.annotation.Id;
 
-public record IdContextProvider(String eventId, String correlationId, String sourceId) implements IdProvider {
+import java.util.Optional;
 
-    public static IdContextProvider toJobIdContextProvider(String correlationId, String sourceId) {
-        return new IdContextProvider(null, correlationId, sourceId);
-    }
+public record IdContextProvider(String eventId, String correlationId, String sourceId) implements IdProvider {
 
     @Override
     public String getEventId() {
-        return this.eventId;
+        return Optional.ofNullable(this.eventId).orElse("-");
     }
 
     @Override
     public String getCorrelationId() {
-        return this.correlationId;
+        return Optional.ofNullable(this.correlationId).orElse("-");
     }
 
     @Override
     public String getSourceId() {
-        return this.sourceId;
+        return Optional.ofNullable(this.sourceId).orElse("-");
     }
 }

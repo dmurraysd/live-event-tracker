@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 @RequestMapping(path = "/events")
 public class EventStatusController {
 
-    private static final String SOURCE_ID = "REST_EVENT_STATUS";
+    private static final String SOURCE_ID = "EVENT_STATUS-REST_API";
 
     private final LiveEventTrackerService liveEventTrackerService;
     private final Supplier<UUID> uuidSupplier;
