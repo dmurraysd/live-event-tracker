@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Configuration
 @EnableKafka
-public class KafkaUpdateProducerConfig {
+public class ScoreUpdateKafkaProducerConfig {
 
     @Bean
     public ProducerFactory<String, Object> producerFactory(@Value("${kafka.broker.address}") String brokerAddress) {

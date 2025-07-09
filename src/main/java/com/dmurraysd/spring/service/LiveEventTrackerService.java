@@ -1,7 +1,7 @@
 package com.dmurraysd.spring.service;
 
 import com.dmurraysd.spring.client.InternalMatchScoreClient;
-import com.dmurraysd.spring.kafka.KafkaUpdateProducer;
+import com.dmurraysd.spring.kafka.ScoreUpdateKafkaProducer;
 import com.dmurraysd.spring.logging.IdProvider;
 import com.dmurraysd.spring.redis.repository.EventDataEntity;
 import com.dmurraysd.spring.redis.repository.EventDataRepository;
@@ -9,7 +9,6 @@ import com.dmurraysd.spring.rest.model.EventData;
 import com.dmurraysd.spring.rest.model.EventStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.stereotype.Component;
 
@@ -26,11 +25,11 @@ public class LiveEventTrackerService {
 
     private final EventDataRepository eventDataRepository;
     private final InternalMatchScoreClient internalMatchScoreClient;
-    private final KafkaUpdateProducer kafkaUpdateProducer;
+    private final ScoreUpdateKafkaProducer kafkaUpdateProducer;
 
     public LiveEventTrackerService(final EventDataRepository eventDataRepository,
                                    final InternalMatchScoreClient internalMatchScoreClient,
-                                   final KafkaUpdateProducer kafkaUpdateProducer) {
+                                   final ScoreUpdateKafkaProducer kafkaUpdateProducer) {
         this.eventDataRepository = eventDataRepository;
         this.internalMatchScoreClient = internalMatchScoreClient;
         this.kafkaUpdateProducer = kafkaUpdateProducer;
@@ -43,6 +42,7 @@ public class LiveEventTrackerService {
     }
 
     public void publishLiveMatchScores(IdProvider context) {
+        logger.info(formatLogMessage(context, "Commencing publishing of match score updates"));
 
         eventDataRepository.findAllByEventStatus(EventStatus.LIVE)
                 .stream()

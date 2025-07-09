@@ -15,18 +15,21 @@ import org.springframework.messaging.support.MessageBuilder;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
-@Configuration
-public class KafkaUpdateProducer {
+import static com.dmurraysd.spring.logging.LoggingUtil.formatLogMessage;
 
-    private static final Logger logger = LoggerFactory.getLogger(LiveEventTrackerService.class);
+@Configuration
+public class ScoreUpdateKafkaProducer {
+
+    private static final Logger logger = LoggerFactory.getLogger(ScoreUpdateKafkaProducer.class);
+
     private static final String CORRELATION_ID = "spyCorrelationId";
     private static final String SOURCE_ID = "spySourceId";
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final String kafkaTopic;
 
-    public KafkaUpdateProducer(final KafkaTemplate<String, Object> kafkaTemplate,
-                               @Value("${kafka.outbound.topic}") String kafkaTopic) {
+    public ScoreUpdateKafkaProducer(@Value("${kafka.topic.outbound}") final String kafkaTopic,
+                                    final KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
         this.kafkaTopic = kafkaTopic;
     }
@@ -42,10 +45,11 @@ public class KafkaUpdateProducer {
         return kafkaTemplate.send(messageToProduce)
                 .handle((result, exception) -> {
                     if (exception == null) {
-                        return null;
+                        logger.info(formatLogMessage(context, "Published message to downstream topic %s", kafkaTopic));
                     } else {
-                        return null;
+                        logger.error(formatLogMessage(context, "Error when attempting to produce message with key %s to downstream topic", matchScore.eventId()), exception);
                     }
+                    return null;
                 });
 
     }

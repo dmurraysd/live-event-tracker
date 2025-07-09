@@ -31,6 +31,5 @@ class EventDataRepositoryTest {
         List<EventDataEntity> events = eventDataRepository.findAllByEventStatus(EventStatus.LIVE);
         assertEquals(1, events.size());
         EventDataEntity found = events.get(0);
-        System.out.println(found);
     }
 }

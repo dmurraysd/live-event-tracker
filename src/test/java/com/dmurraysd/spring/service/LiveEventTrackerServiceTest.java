@@ -1,11 +1,8 @@
 package com.dmurraysd.spring.service;
 
-import com.dmurraysd.spring.client.InternalMatchScoreClient;
 import com.dmurraysd.spring.client.RestClientConfig;
-import com.dmurraysd.spring.client.ServerException;
-import com.dmurraysd.spring.config.RedisTestConfig;
-import com.dmurraysd.spring.kafka.KafkaUpdateProducer;
-import com.dmurraysd.spring.kafka.KafkaUpdateProducerConfig;
+import com.dmurraysd.spring.kafka.ScoreUpdateKafkaProducer;
+import com.dmurraysd.spring.kafka.ScoreUpdateKafkaProducerConfig;
 import com.dmurraysd.spring.kafka.MatchScore;
 import com.dmurraysd.spring.logging.IdContextProvider;
 import com.dmurraysd.spring.redis.repository.EventDataRepository;
@@ -19,13 +16,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.client.RestClientAutoConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -34,7 +27,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 
 import static com.dmurraysd.spring.utils.TestUtils.readJsonResourceToObject;
-import static com.dmurraysd.spring.utils.TestUtils.serialise;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static java.lang.String.format;
@@ -43,7 +35,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {LiveEventTrackerService.class, RestClientConfig.class, RestClientAutoConfiguration.class,
-         KafkaUpdateProducer.class, KafkaUpdateProducerConfig.class})
+         ScoreUpdateKafkaProducer.class, ScoreUpdateKafkaProducerConfig.class})
 @TestPropertySource(properties = "spring.data.redis.port=6379")
 class LiveEventTrackerServiceTest {
 

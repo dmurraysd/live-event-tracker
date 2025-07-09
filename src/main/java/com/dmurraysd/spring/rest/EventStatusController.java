@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-//@CacheConfig(cacheNames = "event-status-cache")
 @RestController
 @RequestMapping(path = "/events")
 public class EventStatusController {
