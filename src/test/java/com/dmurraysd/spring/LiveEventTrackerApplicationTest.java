@@ -19,7 +19,7 @@ class LiveEventTrackerApplicationTest {
     @DisplayName("Consumer sends live update for an event and event update is sent to topic")
     @Test
     void shouldProcessIncomingRequestAndPublishEventUpdateToTopic() {
-       
+
     }
 
 }
