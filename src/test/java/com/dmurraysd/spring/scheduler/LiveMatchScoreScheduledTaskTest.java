@@ -1,6 +1,8 @@
 package com.dmurraysd.spring.scheduler;
 
 import com.dmurraysd.spring.config.RedisTestConfig;
+import com.dmurraysd.spring.kafka.ScoreUpdateKafkaProducer;
+import com.dmurraysd.spring.kafka.ScoreUpdateKafkaProducerConfig;
 import com.dmurraysd.spring.service.LiveEventTrackerService;
 import org.awaitility.Durations;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,11 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(properties = {"scheduled.job.fixed.delay=2000"})
 class LiveMatchScoreScheduledTaskTest {
 
+    @MockitoBean
+    private ScoreUpdateKafkaProducerConfig scoreUpdateKafkaProducerConfig;
+
+    @MockitoBean
+    private ScoreUpdateKafkaProducer scoreUpdateKafkaProducer;
 
     @MockitoSpyBean
     private LiveMatchScoreScheduledTask liveMatchScoreScheduledTask;

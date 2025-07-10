@@ -1,9 +1,9 @@
 package com.dmurraysd.spring.rest;
 
 import com.dmurraysd.spring.logging.IdContextProvider;
-import com.dmurraysd.spring.rest.model.EventData;
-import com.dmurraysd.spring.rest.model.EventDataRequest;
-import com.dmurraysd.spring.rest.model.EventStatus;
+import com.dmurraysd.spring.model.EventData;
+import com.dmurraysd.spring.model.EventDataRequest;
+import com.dmurraysd.spring.model.EventStatus;
 import com.dmurraysd.spring.service.LiveEventTrackerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ class EventStatusControllerTest {
     private final EventStatusController eventStatusController = new EventStatusController(liveEventTrackerService, UUID::randomUUID);
 
 
-    @Test
+   @Test
     void shouldProcessEventStatusMessageAndReturnEventStatus() {
         String eventId = "eventId";
         EventStatus status = EventStatus.LIVE;

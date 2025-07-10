@@ -2,24 +2,27 @@ package com.dmurraysd.spring.rest;
 
 import com.dmurraysd.spring.logging.IdProvider;
 import com.dmurraysd.spring.logging.LoggingUtil;
-import com.dmurraysd.spring.rest.model.EventData;
-import com.dmurraysd.spring.rest.model.EventDataRequest;
+import com.dmurraysd.spring.model.EventData;
+import com.dmurraysd.spring.model.EventDataRequest;
 import com.dmurraysd.spring.service.LiveEventTrackerService;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 import java.util.function.Supplier;
+
+import static com.dmurraysd.spring.logging.LoggingUtil.formatLogMessage;
 
 @RestController
 @RequestMapping(path = "/events")
 public class EventStatusController {
 
-    private static final String SOURCE_ID = "EVENT_STATUS-REST_API";
+    private static final Logger logger = LoggerFactory.getLogger(EventStatusController.class);
+    private static final String SOURCE_ID = "event-status-rest-api";
 
     private final LiveEventTrackerService liveEventTrackerService;
     private final Supplier<UUID> uuidSupplier;
@@ -30,10 +33,11 @@ public class EventStatusController {
         this.uuidSupplier = uuidSupplier;
     }
 
-    @PostMapping(path = "/status", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EventDataRequest> updateEventStatus(@RequestBody EventDataRequest eventDataRequest) {
+    @PostMapping(path = "/status", consumes = MediaType.APPLICATION_JSON_VALUE) //produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<EventDataRequest> updateEventStatus(@Valid @RequestBody EventDataRequest eventDataRequest) {
         IdProvider context = LoggingUtil.loggingContext(eventDataRequest, uuidSupplier.get(), SOURCE_ID);
 
+        logger.info(formatLogMessage(context, "Updating status of event %s", eventDataRequest));
         EventData eventData = liveEventTrackerService.updateEventStatus(EventData.convertToInternal(eventDataRequest, context));
 
         return ResponseEntity.ok(eventData.toEventDataRequest());

@@ -10,6 +10,5 @@
             <AppenderRef ref="Console"/>
         </Root>
         <Logger name="com.dmurraysd.spring" level="info"/>
-        <Logger name="org.apache.kafka.common.utils.AppInfoParser" level="error"/>
     </Loggers>
 </Configuration>

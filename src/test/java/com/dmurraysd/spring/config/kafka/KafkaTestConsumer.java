@@ -1,15 +1,18 @@
-package com.dmurraysd.spring.config;
+package com.dmurraysd.spring.config.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Component
+@Profile("test")
 @Import({KafkaTestConfig.class})
 public class KafkaTestConsumer {
 

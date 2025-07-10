@@ -1,7 +1,7 @@
 package com.dmurraysd.spring.kafka;
 
 import com.dmurraysd.spring.logging.IdProvider;
-import com.dmurraysd.spring.service.LiveEventTrackerService;
+import com.dmurraysd.spring.model.MatchScore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

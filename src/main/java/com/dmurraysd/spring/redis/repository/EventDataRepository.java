@@ -1,6 +1,6 @@
 package com.dmurraysd.spring.redis.repository;
 
-import com.dmurraysd.spring.rest.model.EventStatus;
+import com.dmurraysd.spring.model.EventStatus;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

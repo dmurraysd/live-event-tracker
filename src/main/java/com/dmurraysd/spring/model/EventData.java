@@ -1,4 +1,4 @@
-package com.dmurraysd.spring.rest.model;
+package com.dmurraysd.spring.model;
 
 import com.dmurraysd.spring.logging.IdProvider;
 import com.dmurraysd.spring.redis.repository.EventDataEntity;

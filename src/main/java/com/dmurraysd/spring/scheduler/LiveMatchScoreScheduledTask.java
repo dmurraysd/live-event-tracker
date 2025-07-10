@@ -18,7 +18,7 @@ import static com.dmurraysd.spring.logging.LoggingUtil.formatLogMessage;
 public class LiveMatchScoreScheduledTask {
 
     private static final Logger logger = LoggerFactory.getLogger(LiveMatchScoreScheduledTask.class);
-    private static final String SOURCE_ID = "LIVE_MATCH_SCORE_SCHEDULED_TASK";
+    private static final String SOURCE_ID = "live_match_score_scheduled_task";
 
     private final LiveEventTrackerService liveEventTrackerService;
     private final Supplier<UUID> uuidSupplier;

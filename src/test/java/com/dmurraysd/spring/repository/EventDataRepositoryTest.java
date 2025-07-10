@@ -3,7 +3,7 @@ package com.dmurraysd.spring.repository;
 import com.dmurraysd.spring.config.RedisTestConfig;
 import com.dmurraysd.spring.redis.repository.EventDataEntity;
 import com.dmurraysd.spring.redis.repository.EventDataRepository;
-import com.dmurraysd.spring.rest.model.EventStatus;
+import com.dmurraysd.spring.model.EventStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest;
@@ -31,5 +31,6 @@ class EventDataRepositoryTest {
         List<EventDataEntity> events = eventDataRepository.findAllByEventStatus(EventStatus.LIVE);
         assertEquals(1, events.size());
         EventDataEntity found = events.get(0);
+        assertEquals(eventData, found);
     }
 }

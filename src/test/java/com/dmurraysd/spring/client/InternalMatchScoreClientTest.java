@@ -1,9 +1,6 @@
 package com.dmurraysd.spring.client;
 
-import com.dmurraysd.spring.kafka.MatchScore;
-import com.dmurraysd.spring.utils.TestUtils;
-import com.dmurraysd.spring.utils.TestUtils.*;
-import com.github.tomakehurst.wiremock.WireMockServer;
+import com.dmurraysd.spring.model.MatchScore;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

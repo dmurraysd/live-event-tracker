@@ -1,9 +1,7 @@
 package com.dmurraysd.spring.logging;
 
-import com.dmurraysd.spring.rest.model.EventDataRequest;
-import org.apache.logging.log4j.core.LogEvent;
+import com.dmurraysd.spring.model.EventDataRequest;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 import static java.lang.String.format;

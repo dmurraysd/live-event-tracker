@@ -12,6 +12,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 
 public class TestUtils {
@@ -27,6 +28,17 @@ public class TestUtils {
             String payload = Files.readString(Path.of(filepath));
 
             return deSerialize(payload, clazz);
+        } catch (URISyntaxException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static <T> List<T> readJsonResourceToList(final String fileName, final Class<T> clazz) {
+        try {
+            final URI filepath = Objects.requireNonNull(TestUtils.class.getClassLoader().getResource(fileName)).toURI();
+            String json = Files.readString(Path.of(filepath));
+
+            return objectMapper.readValue(json, objectMapper.getTypeFactory().constructCollectionType(List.class, clazz));
         } catch (URISyntaxException | IOException e) {
             throw new RuntimeException(e);
         }

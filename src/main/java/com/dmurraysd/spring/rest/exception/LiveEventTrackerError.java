@@ -1,8 +1,8 @@
 package com.dmurraysd.spring.rest.exception;
 
-public record LiveEventTrackerError(int code, String message, String details) {
+public record LiveEventTrackerError<T>(int code, String message, T details) {
 
-    public static LiveEventTrackerError of(int code, String message, String details) {
-        return new LiveEventTrackerError(code, message, details);
+    public LiveEventTrackerError<T> of(int code, String message, T details) {
+        return new LiveEventTrackerError<>(code, message, details);
     }
 }
