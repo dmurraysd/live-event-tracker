@@ -35,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = {RedisTestConfig.class},
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = {"kafka.broker.address=${" + EmbeddedKafkaBroker.SPRING_EMBEDDED_KAFKA_BROKERS + "}",
+                "internal.match.score.client.url=http://localhost:8089/",
                 "scheduled.job.fixed.delay=PT3S"})
 @EmbeddedKafka(partitions = 1,
         topics = {"${kafka.topic.outbound:scoreUpdates}"},
@@ -43,7 +44,7 @@ class LiveEventTrackerApplicationTest {
 
     @RegisterExtension
     private static final WireMockExtension wireMockServer = WireMockExtension.newInstance()
-            .options(wireMockConfig().port(8085)).build();
+            .options(wireMockConfig().port(8089).notifier(new ConsoleNotifier(true))).build();
 
     @LocalServerPort
     private Integer serverPort;

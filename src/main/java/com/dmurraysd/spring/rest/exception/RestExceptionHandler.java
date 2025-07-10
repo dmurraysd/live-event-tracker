@@ -1,7 +1,6 @@
-package com.dmurraysd.spring.rest;
+package com.dmurraysd.spring.rest.exception;
 
 import com.dmurraysd.spring.client.ServerException;
-import com.dmurraysd.spring.rest.exception.LiveEventTrackerError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.*;
 
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = "com.dmurraysd.spring.rest")
 public class RestExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(RestExceptionHandler.class);

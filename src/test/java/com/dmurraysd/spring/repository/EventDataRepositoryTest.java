@@ -14,7 +14,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ContextConfiguration(classes = {RedisTestConfig.class})
-@DataRedisTest(properties = {"spring.data.redis.port=6390"})
+@DataRedisTest(properties = {"spring.data.redis.port=6390",
+        "spring.data.redis.host=localhost"})
 class EventDataRepositoryTest {
 
     @Autowired

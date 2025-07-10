@@ -9,7 +9,6 @@ import com.dmurraysd.spring.model.EventDataRequest;
 import com.dmurraysd.spring.model.EventStatus;
 import com.dmurraysd.spring.model.MatchScore;
 import com.dmurraysd.spring.redis.repository.EventDataRepository;
-import com.github.tomakehurst.wiremock.common.ConsoleNotifier;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +39,8 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {LiveEventTrackerService.class, RestClientConfig.class, RestClientAutoConfiguration.class,
         ScoreUpdateKafkaProducer.class, ScoreUpdateKafkaProducerConfig.class})
-@TestPropertySource(properties = "spring.data.redis.port=6379")
+@TestPropertySource(properties = {"spring.data.redis.port=6379",
+        "internal.match.score.client.url=http://localhost:8085/"})
 class LiveEventTrackerServiceTest {
 
     @RegisterExtension
