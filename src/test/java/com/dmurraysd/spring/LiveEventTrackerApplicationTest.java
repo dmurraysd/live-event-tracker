@@ -43,7 +43,7 @@ class LiveEventTrackerApplicationTest {
 
     @RegisterExtension
     private static final WireMockExtension wireMockServer = WireMockExtension.newInstance()
-            .options(wireMockConfig().port(8085).notifier(new ConsoleNotifier(true))).build();
+            .options(wireMockConfig().port(8085)).build();
 
     @LocalServerPort
     private Integer serverPort;

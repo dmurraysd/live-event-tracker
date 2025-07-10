@@ -46,8 +46,7 @@ class LiveEventTrackerServiceTest {
     @RegisterExtension
     static WireMockExtension wireMockServer = WireMockExtension.newInstance()
             .options(wireMockConfig()
-                    .port(8085).notifier(new ConsoleNotifier(true)))
-
+                    .port(8085))
             .build();
 
     @Autowired
