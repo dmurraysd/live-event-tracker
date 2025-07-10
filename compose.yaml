@@ -1,5 +1,52 @@
 services:
   redis:
     image: 'redis:latest'
+    container_name: my-redis
+    hostname: redis
+    command: --port 6380
     ports:
-      - '6379'
+      - "6380:6380"
+    restart: always
+
+  wiremock:
+    image: "wiremock/wiremock:latest"
+    container_name: my-wiremock
+    volumes:
+      - ./wiremock:/home/wiremock
+    ports:
+      - 8383:8080
+#  live-event-tracker-container:
+#      image: live-event-tracker-app:v0.0.14
+#      build:
+#        context: ./
+#        dockerfile: Dockerfile
+#      volumes:
+#        - /data/live-event-tracker-app
+#      ports:
+#        - "8081:8081"
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.1.0
+    ports:
+      - 2181:2181
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    extra_hosts:
+      - 'localhost:127.0.0.1'
+  kafka:
+      image: confluentinc/cp-kafka:5.1.0
+      ports:
+        - 9092:9092
+      depends_on:
+        - zookeeper
+      container_name: test_kafka
+      environment:
+        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+        #KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:9092
+        KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+        KAFKA_DELETE_TOPIC_ENABLE: "true"
+        KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      extra_hosts:
+        - 'localhost:127.0.0.1'
