@@ -4,7 +4,7 @@ ENTRYPOINT ["/docker-entrypoint.sh", "--global-response-templating", "--disable-
 
 FROM amazoncorretto:21
 WORKDIR /app
-ARG JAR_FILE=target/live-event-tracker-0.0.14.jar
-COPY ${JAR_FILE} /app/live-event-tracker-0.0.14.jar
+ARG JAR_FILE=target/live-event-tracker-0.0.1.jar
+COPY ${JAR_FILE} /app/live-event-tracker-0.0.1.jar
 EXPOSE 8081
-ENTRYPOINT ["java","-jar","/app/live-event-tracker-0.0.14.jar"]
+ENTRYPOINT ["java","-jar","/app/live-event-tracker-0.0.1.jar"]
