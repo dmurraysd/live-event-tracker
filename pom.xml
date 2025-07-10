@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.dmurraysd.spring</groupId>
     <artifactId>live-event-tracker</artifactId>
-    <version>0.0.14</version>
+    <version>0.0.1</version>
     <name>live-event-tracker</name>
     <description>live-event-tracker</description>
     <url/>

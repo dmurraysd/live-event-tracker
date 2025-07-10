@@ -15,15 +15,15 @@ services:
       - ./wiremock:/home/wiremock
     ports:
       - 8383:8080
-#  live-event-tracker-container:
-#      image: live-event-tracker-app:v0.0.14
-#      build:
-#        context: ./
-#        dockerfile: Dockerfile
-#      volumes:
-#        - /data/live-event-tracker-app
-#      ports:
-#        - "8081:8081"
+  live-event-tracker-container:
+      image: live-event-tracker-app:v0.0.1
+      build:
+        context: ./
+        dockerfile: Dockerfile
+      volumes:
+        - /data/live-event-tracker-app
+      ports:
+        - "8081:8081"
 
   zookeeper:
     image: confluentinc/cp-zookeeper:5.1.0
