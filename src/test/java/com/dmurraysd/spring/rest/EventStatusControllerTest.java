@@ -20,7 +20,7 @@ class EventStatusControllerTest {
     private final EventStatusController eventStatusController = new EventStatusController(liveEventTrackerService, UUID::randomUUID);
 
 
-   @Test
+    @Test
     void shouldProcessEventStatusMessageAndReturnEventStatus() {
         String eventId = "eventId";
         EventStatus status = EventStatus.LIVE;

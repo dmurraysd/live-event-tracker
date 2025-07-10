@@ -67,7 +67,7 @@ public class TestUtils {
 
     public static <T> String serialise(final T object) {
         try {
-            if(Objects.nonNull(object)) {
+            if (Objects.nonNull(object)) {
                 return objectMapper.writeValueAsString(object);
             }
             return null;

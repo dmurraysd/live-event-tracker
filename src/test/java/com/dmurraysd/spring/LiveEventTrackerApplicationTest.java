@@ -2,8 +2,8 @@ package com.dmurraysd.spring;
 
 import com.dmurraysd.spring.config.RedisTestConfig;
 import com.dmurraysd.spring.config.kafka.KafkaTestConsumer;
-import com.dmurraysd.spring.model.MatchScore;
 import com.dmurraysd.spring.model.EventDataRequest;
+import com.dmurraysd.spring.model.MatchScore;
 import com.dmurraysd.spring.utils.TestUtils;
 import com.github.tomakehurst.wiremock.common.ConsoleNotifier;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
@@ -34,8 +34,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles("test")
 @SpringBootTest(classes = {RedisTestConfig.class},
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-properties = {"kafka.broker.address=${" + EmbeddedKafkaBroker.SPRING_EMBEDDED_KAFKA_BROKERS + "}",
-        "scheduled.job.fixed.delay=PT3S"})
+        properties = {"kafka.broker.address=${" + EmbeddedKafkaBroker.SPRING_EMBEDDED_KAFKA_BROKERS + "}",
+                "scheduled.job.fixed.delay=PT3S"})
 @EmbeddedKafka(partitions = 1,
         topics = {"${kafka.topic.outbound:scoreUpdates}"},
         brokerProperties = {"log.dir=target/kafka/${random.uuid}/"})
@@ -81,9 +81,9 @@ class LiveEventTrackerApplicationTest {
                 .forEach(response -> assertEquals(HttpStatus.OK, response.getStatusCode()));
 
         await().atMost(Duration.ofSeconds(4L))
-                        .untilAsserted(() -> {
-                            assertEquals(1, kafkaTestConsumer.getAllRecords().size());
-                        });
+                .untilAsserted(() -> {
+                    assertEquals(1, kafkaTestConsumer.getAllRecords().size());
+                });
 
         assertEquals(1, kafkaTestConsumer.getAllRecords().size());
         MatchScore actualMatchScore = deSerialize(kafkaTestConsumer.getLastMessage().value(), MatchScore.class);

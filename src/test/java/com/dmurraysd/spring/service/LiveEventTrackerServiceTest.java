@@ -1,15 +1,14 @@
 package com.dmurraysd.spring.service;
 
-import com.dmurraysd.spring.client.InternalMatchScoreClient;
 import com.dmurraysd.spring.client.RestClientConfig;
 import com.dmurraysd.spring.kafka.ScoreUpdateKafkaProducer;
 import com.dmurraysd.spring.kafka.ScoreUpdateKafkaProducerConfig;
-import com.dmurraysd.spring.model.MatchScore;
 import com.dmurraysd.spring.logging.IdContextProvider;
-import com.dmurraysd.spring.redis.repository.EventDataRepository;
 import com.dmurraysd.spring.model.EventData;
 import com.dmurraysd.spring.model.EventDataRequest;
 import com.dmurraysd.spring.model.EventStatus;
+import com.dmurraysd.spring.model.MatchScore;
+import com.dmurraysd.spring.redis.repository.EventDataRepository;
 import com.github.tomakehurst.wiremock.common.ConsoleNotifier;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.Test;
@@ -33,12 +32,14 @@ import static com.dmurraysd.spring.utils.TestUtils.serialise;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static java.lang.String.format;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {LiveEventTrackerService.class, RestClientConfig.class, RestClientAutoConfiguration.class,
-         ScoreUpdateKafkaProducer.class, ScoreUpdateKafkaProducerConfig.class})
+        ScoreUpdateKafkaProducer.class, ScoreUpdateKafkaProducerConfig.class})
 @TestPropertySource(properties = "spring.data.redis.port=6379")
 class LiveEventTrackerServiceTest {
 
@@ -74,7 +75,7 @@ class LiveEventTrackerServiceTest {
     void shouldPublishScoreUpdates() {
         EventDataRequest eventDataRequest = new EventDataRequest("eventId", EventStatus.LIVE);
         EventData eventData = EventData.convertToInternal(eventDataRequest, new IdContextProvider(eventDataRequest.eventId(), "CID", "SID"));
-       MatchScore matchScore = new MatchScore(eventData.eventId(), "0:0");
+        MatchScore matchScore = new MatchScore(eventData.eventId(), "0:0");
 
         wireMockServer.stubFor(
                 get(urlEqualTo(format("/scores/%s", eventData.eventId())))

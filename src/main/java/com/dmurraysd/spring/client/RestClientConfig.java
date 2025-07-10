@@ -25,8 +25,8 @@ public class RestClientConfig {
     }
 
     private <S> S getClient(final RestClient.Builder restClientBuilder,
-                                               final String url,
-                                               final Class<S> clazz) {
+                            final String url,
+                            final Class<S> clazz) {
         return HttpServiceProxyFactory
                 .builderFor(RestClientAdapter.create(configureBuilder(restClientBuilder, url)))
                 .build()

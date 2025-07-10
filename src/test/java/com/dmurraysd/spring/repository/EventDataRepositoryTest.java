@@ -1,9 +1,9 @@
 package com.dmurraysd.spring.repository;
 
 import com.dmurraysd.spring.config.RedisTestConfig;
+import com.dmurraysd.spring.model.EventStatus;
 import com.dmurraysd.spring.redis.repository.EventDataEntity;
 import com.dmurraysd.spring.redis.repository.EventDataRepository;
-import com.dmurraysd.spring.model.EventStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest;
@@ -11,7 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ContextConfiguration(classes = {RedisTestConfig.class})
 @DataRedisTest(properties = {"spring.data.redis.port=6390"})

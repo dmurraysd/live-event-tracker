@@ -10,7 +10,7 @@ public record EventData(String eventId, EventStatus eventStatus, IdProvider cont
     }
 
     public static EventData convertToInternal(EventDataEntity eventDataEntity, IdProvider context) {
-        return new EventData(eventDataEntity.eventId(),eventDataEntity.eventStatus(),context);
+        return new EventData(eventDataEntity.eventId(), eventDataEntity.eventStatus(), context);
     }
 
     public EventDataRequest toEventDataRequest() {

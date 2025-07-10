@@ -9,7 +9,6 @@ import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
 
@@ -25,7 +24,7 @@ public interface InternalMatchScoreClient {
 
     @Valid
     @Retryable(retryFor = ServerException.class, maxAttemptsExpression = "${internal.match.score.client.retry:3}",
-        backoff = @Backoff(delayExpression = "${internal.match.score.client.backoff:50}")
+            backoff = @Backoff(delayExpression = "${internal.match.score.client.backoff:50}")
     )
     @GetExchange("/scores/{eventId}")
     Optional<MatchScore> retrieveMatchScore(@PathVariable String eventId);

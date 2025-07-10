@@ -12,7 +12,8 @@ import org.springframework.web.client.RestClient;
 
 import java.util.Optional;
 
-import static com.dmurraysd.spring.utils.TestUtils.*;
+import static com.dmurraysd.spring.utils.TestUtils.readJsonResourceToObject;
+import static com.dmurraysd.spring.utils.TestUtils.serialise;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static java.lang.String.format;
@@ -20,11 +21,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InternalMatchScoreClientTest {
 
+    private static final int SERVER_PORT = 8081;
+
     @RegisterExtension
     private static final WireMockExtension wireMockServer = WireMockExtension.newInstance()
-            .options(wireMockConfig().port(8081)).build();
+            .options(wireMockConfig().port(SERVER_PORT)).build();
 
-    private static final String TEST_API_URL = "http://localhost:" + "8081";//wireMockServer.getPort();
+    private static final String TEST_API_URL = "http://localhost:" + SERVER_PORT;
 
     private final RestClientConfig restClientConfig = new RestClientConfig();
     private InternalMatchScoreClient internalMatchScoreClient;
@@ -41,8 +44,8 @@ class InternalMatchScoreClientTest {
         wireMockServer.stubFor(get(urlEqualTo(format("/scores/%s", matchScore.eventId())))
                 .willReturn(aResponse()
                         .withStatus(HttpStatus.OK.value())
-                .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .withBody(serialise(matchScore)))
+                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(serialise(matchScore)))
         );
 
         final MatchScore actualMatchScore = internalMatchScoreClient.retrieveMatchScore(matchScore.eventId()).get();

@@ -13,7 +13,7 @@ import org.springframework.messaging.Message;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -35,7 +35,6 @@ class ScoreUpdateKafkaProducerTest {
     void shouldSendMessage() {
         when(kafkaTemplate.send(any(Message.class))).thenReturn(new CompletableFuture<>());
 
-        final MatchScore matchScore = new MatchScore("eventId", "0:0");
         scoreUpdateKafkaProducer.send(matchScore, new IdContextProvider("eventId", "cid", "sid"));
 
         verify(kafkaTemplate).send(messageArgumentCaptor.capture());

@@ -14,7 +14,6 @@ import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.test.context.ActiveProfiles;
 import wiremock.com.google.common.collect.ImmutableMap;
 
 @TestConfiguration

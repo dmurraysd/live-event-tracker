@@ -1,10 +1,8 @@
 package com.dmurraysd.spring.scheduler;
 
-import com.dmurraysd.spring.config.RedisTestConfig;
 import com.dmurraysd.spring.kafka.ScoreUpdateKafkaProducer;
 import com.dmurraysd.spring.kafka.ScoreUpdateKafkaProducerConfig;
 import com.dmurraysd.spring.service.LiveEventTrackerService;
-import org.awaitility.Durations;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -14,7 +12,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import java.time.Duration;
 
 import static org.awaitility.Awaitility.await;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -39,8 +36,8 @@ class LiveMatchScoreScheduledTaskTest {
         doNothing().when(liveEventTrackerService).publishLiveMatchScores(any());
 
         await().atMost(Duration.ofSeconds(5L))
-                        .untilAsserted(() -> {
-                            verify(liveMatchScoreScheduledTask, atLeast(2)).publishLiveMatchScores();
-                        });
+                .untilAsserted(() -> {
+                    verify(liveMatchScoreScheduledTask, atLeast(2)).publishLiveMatchScores();
+                });
     }
 }

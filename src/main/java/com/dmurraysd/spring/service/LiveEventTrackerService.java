@@ -3,10 +3,10 @@ package com.dmurraysd.spring.service;
 import com.dmurraysd.spring.client.InternalMatchScoreClient;
 import com.dmurraysd.spring.kafka.ScoreUpdateKafkaProducer;
 import com.dmurraysd.spring.logging.IdProvider;
-import com.dmurraysd.spring.redis.repository.EventDataEntity;
-import com.dmurraysd.spring.redis.repository.EventDataRepository;
 import com.dmurraysd.spring.model.EventData;
 import com.dmurraysd.spring.model.EventStatus;
+import com.dmurraysd.spring.redis.repository.EventDataEntity;
+import com.dmurraysd.spring.redis.repository.EventDataRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.retry.annotation.EnableRetry;
@@ -16,7 +16,6 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static com.dmurraysd.spring.logging.LoggingUtil.formatLogMessage;
-import static java.lang.String.format;
 
 @EnableRetry
 @Component
@@ -36,13 +35,13 @@ public class LiveEventTrackerService {
     }
 
     public EventData updateEventStatus(EventData eventData) {
-        logger.info(formatLogMessage(eventData.context(), "Updating event status %s", eventData.getEventId()));
+        logger.info(formatLogMessage(eventData.context(), "Updating event status for event with id %s", eventData.getEventId()));
         EventDataEntity eventDataEntity = eventDataRepository.save(eventData.toEventDataEntity());
         return EventData.convertToInternal(eventDataEntity, eventData.context());
     }
 
     public void publishLiveMatchScores(IdProvider context) {
-        logger.info(formatLogMessage(context, "Commencing publishing of match score updates"));
+        logger.info(formatLogMessage(context, "Publishing of match score updates"));
 
         eventDataRepository.findAllByEventStatus(EventStatus.LIVE)
                 .stream()
@@ -53,7 +52,7 @@ public class LiveEventTrackerService {
                 .map(matchScore -> kafkaUpdateProducer.send(matchScore, context))
                 .reduce(CompletableFuture::allOf)
                 .orElse(CompletableFuture.completedFuture(null))
-                .whenComplete((v, e)-> logger.info(formatLogMessage(context, "Match scores publishing complete")));
+                .whenComplete((v, e) -> logger.info(formatLogMessage(context, "Match scores publishing complete")));
 
     }
 }

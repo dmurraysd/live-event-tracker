@@ -1,7 +1,5 @@
 package com.dmurraysd.spring.logging;
 
-import org.springframework.data.annotation.Id;
-
 import java.util.Optional;
 
 public record IdContextProvider(String eventId, String correlationId, String sourceId) implements IdProvider {
